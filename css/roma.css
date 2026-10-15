@@ -1,0 +1,456 @@
+/* ROMA — Landing + view switching + Black & White theme */
+
+.roma-view { display: none; }
+.roma-view.active { display: block; }
+
+/* ─── Landing ─── */
+.roma-landing {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    background: #0a0a0a;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+.roma-landing.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.roma-landing-header {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 32px 40px 90px;
+    display: flex;
+    justify-content: center;
+    z-index: 30;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.72) 45%,
+        rgba(0, 0, 0, 0.28) 75%,
+        transparent 100%
+    );
+}
+
+.roma-landing-header img {
+    height: 48px;
+    width: auto;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.55));
+}
+
+.roma-split {
+    display: flex;
+    flex: 1;
+    height: 100%;
+}
+
+.roma-split-panel {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 60px 40px;
+    cursor: pointer;
+    overflow: hidden;
+    text-decoration: none;
+    transition: flex 0.5s ease;
+}
+
+.roma-split-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 1.1s ease;
+    filter: grayscale(100%);
+}
+
+.roma-split-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transition: background 0.5s ease;
+}
+
+.roma-split-man::before {
+    background-image: url('../images/team-1.jpg');
+}
+
+.roma-split-man::after {
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.15) 100%);
+}
+
+.roma-split-woman::before {
+    background-image: url('../images/woman-landing.jpg');
+}
+
+.roma-split-woman::after {
+    background: linear-gradient(to top, rgba(255,255,255,0.93) 0%, rgba(255,255,255,0.5) 55%, rgba(255,255,255,0.15) 100%);
+}
+
+.roma-split-panel:hover::before { transform: scale(1.06); }
+.roma-split-panel:hover { flex: 1.12; }
+
+.roma-split-divider {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    width: 1px; height: 100px;
+    background: rgba(255,255,255,0.25);
+    pointer-events: none;
+}
+
+.roma-split-content {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    transition: transform 0.5s ease;
+}
+
+.roma-split-panel:hover .roma-split-content { transform: translateY(-10px); }
+
+.roma-split-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0.65;
+}
+
+.roma-split-title {
+    font-size: clamp(44px, 7vw, 88px);
+    font-weight: 700;
+    line-height: 1;
+    margin: 0 0 18px;
+    letter-spacing: -0.03em;
+}
+
+.roma-split-man .roma-split-title,
+.roma-split-man .roma-split-label { color: #fff; }
+
+.roma-split-woman .roma-split-title,
+.roma-split-woman .roma-split-label { color: #0a0a0a; }
+
+.roma-split-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px; height: 46px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    font-size: 13px;
+}
+
+.roma-split-man .roma-split-arrow { color: #fff; }
+.roma-split-woman .roma-split-arrow { color: #0a0a0a; }
+
+.roma-landing-tagline {
+    position: absolute;
+    bottom: 28px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    z-index: 10;
+}
+
+/* ─── Header logo (fix invisible logo) ─── */
+header.main-header {
+    z-index: 200 !important;
+}
+
+/* Premium top fade — keeps white logo readable on bright hero areas */
+header.main-header .header-sticky:not(.active) {
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.7) 50%,
+        rgba(0, 0, 0, 0.25) 80%,
+        rgba(0, 0, 0, 0) 100%
+    ) !important;
+    padding-bottom: 20px;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 220px;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.88) 0%,
+        rgba(0, 0, 0, 0.45) 50%,
+        transparent 100%
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+
+.navbar-brand {
+    flex-shrink: 0 !important;
+    min-width: 130px;
+    z-index: 10;
+    position: relative;
+    display: block !important;
+}
+
+.main-header .navbar-brand img {
+    height: 44px !important;
+    width: 140px !important;
+    max-width: 140px !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    filter: none !important;
+    object-fit: contain;
+    object-position: left center;
+}
+
+.footer-logo img {
+    height: 50px;
+    width: auto;
+    max-width: 200px;
+}
+
+/* ─── Woman / Man switch button ─── */
+.header-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.roma-switch-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: capitalize;
+    color: #fff;
+    padding: 12px 22px;
+    border: 1px solid rgba(255,255,255,0.45);
+    border-radius: 100px;
+    background: rgba(255,255,255,0.08);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.roma-switch-btn:hover {
+    background: #fff;
+    color: #0a0a0a;
+    border-color: #fff;
+}
+
+header.main-header .header-sticky.active .roma-switch-btn {
+    border-color: rgba(255,255,255,0.35);
+}
+
+/* ─── Black & White theme ─── */
+:root {
+    --accent-color: #FFFFFF;
+    --bg-color: #F2F2F2;
+    --primary-color: #0a0a0a;
+}
+
+.dark-section {
+    background-color: #0a0a0a !important;
+}
+
+.preloader {
+    background: #0a0a0a;
+}
+
+/* Nav hover — white accent was invisible */
+.main-menu ul li a:hover,
+.main-menu ul li a:focus {
+    color: rgba(255,255,255,0.65) !important;
+}
+
+/* Buttons */
+.btn-default::before {
+    background-image: url('../images/arrow-primary.svg');
+    filter: invert(1);
+}
+
+.btn-default.btn-highlighted {
+    color: var(--primary-color);
+}
+
+/* ─── Service cards hover fix (white on white bug) ─── */
+.our-services .service-item::before {
+    background: #ffffff !important;
+}
+
+.our-services .service-item:hover .service-item-header h2,
+.our-services .service-item:hover .service-item-header h2 a,
+.our-services .service-item:hover .service-item-content p,
+.our-services .service-item:hover .readmore-btn {
+    color: #0a0a0a !important;
+}
+
+.our-services .service-item:hover .readmore-btn::before {
+    background-color: #0a0a0a !important;
+}
+
+.our-services .service-item .icon-box img {
+    filter: brightness(0) invert(1);
+}
+
+.our-services .service-item:hover .icon-box img {
+    filter: brightness(0) invert(0);
+}
+
+/* ─── Icons — remove gold, match B&W theme ─── */
+.about-us .about-us-item .icon-box img {
+    filter: brightness(0);
+}
+
+.dark-section .icon-box img,
+.why-choose-us .icon-box img {
+    filter: brightness(0) invert(1);
+}
+
+.hero-working-hours .icon-box img {
+    filter: brightness(0) invert(1);
+}
+
+/* Section subtitle border */
+.dark-section .section-sub-title {
+    border-color: rgba(255,255,255,0.2) !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar-thumb {
+    background: #0a0a0a;
+}
+
+::selection {
+    background-color: #0a0a0a;
+    color: #fff;
+}
+
+/* ─── Hero image (Women page) ─── */
+.hero-bg-video {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.hero-bg-video img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-bg-video::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1;
+}
+
+.hero-bg-video video,
+.hero-bg-video img {
+    z-index: 0;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Pricing / readmore on light sections */
+.readmore-btn::before {
+    background-color: #0a0a0a !important;
+}
+
+@media (max-width: 991px) {
+    .header-btn {
+        gap: 8px;
+    }
+    .roma-switch-btn {
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .roma-split { flex-direction: column; }
+    .roma-split-divider { width: 70px; height: 1px; }
+    .roma-landing-header { padding: 22px; }
+    .roma-landing-header img { height: 34px; }
+    .roma-switch-btn { display: none; }
+    .main-header .navbar-brand img {
+        height: 36px !important;
+        min-width: 80px;
+    }
+    .footer-copyright-left,
+    .footer-copyright-right {
+        text-align: center !important;
+    }
+    .footer-copyright-right {
+        margin-top: 10px;
+    }
+}
+
+/* Footer copyright — left & right */
+.footer-copyright-text {
+    text-align: inherit;
+}
+
+.footer-copyright-left {
+    text-align: left;
+}
+
+.footer-copyright-right {
+    text-align: right;
+}
+
+.footer-copyright-right p {
+    margin-bottom: 0;
+}
+
+.footer-copyright-right a {
+    color: #ffffff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.3s ease;
+}
+
+.footer-copyright-right a:hover {
+    opacity: 0.75;
+    color: #ffffff;
+}
+
+/* Footer Book Appointment text — visible on dark background */
+.footer-newsletter-box .footer-book-text,
+.footer-newsletter-box > p {
+    color: rgba(255, 255, 255, 0.85) !important;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+/* Why Choose list bullets — black on light background */
+.why-choose-list ul li::before {
+    filter: brightness(0);
+}
